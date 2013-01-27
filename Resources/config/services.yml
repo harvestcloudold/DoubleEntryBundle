@@ -1,0 +1,7 @@
+parameters:
+#    harvest_cloud_double_entry.example.class: HarvestCloud\DoubleEntryBundle\Example
+
+services:
+#    harvest_cloud_double_entry.example:
+#        class: %harvest_cloud_double_entry.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
