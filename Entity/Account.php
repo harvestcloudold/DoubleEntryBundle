@@ -10,6 +10,7 @@
 namespace HarvestCloud\DoubleEntryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use HarvestCloud\CoreBundle\Entity\Profile;
 
@@ -20,29 +21,69 @@ use HarvestCloud\CoreBundle\Entity\Profile;
  * @since  2012-05-03
  *
  * @ORM\Entity
- * @ORM\Table(name="double_entry_account",indexes={@ORM\index(name="profile_type_ids", columns={"profile_id", "type_code"})})
+ * @Gedmo\Tree(type="nested")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *    "ac"           = "Account",
+ *    "as"           = "Asset",
+ *    "li"           = "Liability",
+ *    "in"           = "Income",
+ *    "ex"           = "Expense",
+ *    "eq"           = "Equity",
+ *    "cu"           = "CurrentAsset",
+ *    "ar"           = "AccountsReceivable",
+ *    "ap"           = "AccountsPayable",
+ *    "sa"           = "Sales"
+ * })
+ * @ORM\Table(name="double_entry_account")
  * @ORM\Entity(repositoryClass="HarvestCloud\DoubleEntryBundle\Repository\AccountRepository")
  */
 class Account
 {
-    /**
-     * Account types
-     *
-     * @var string
-     */
-    const
-      TYPE_ACCOUNTS_RECEIVABLE = 'AR',
-      TYPE_ACCOUNTS_PAYABLE    = 'AP',
-      TYPE_SALES               = 'SA',
-      TYPE_BANK                = 'BA'
-    ;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $lft;
+
+    /**
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer")
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\Column(name="root", type="integer", nullable=true)
+     */
+    private $root;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="parent", cascade={"persist"})
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    private $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Profile", inversedBy="accounts")
@@ -54,11 +95,6 @@ class Account
      * @ORM\OneToMany(targetEntity="Posting", mappedBy="account")
      */
     protected $postings;
-
-    /**
-     * @ORM\Column(type="string", length=2)
-     */
-    protected $type_code;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -75,9 +111,13 @@ class Account
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2012-05-03
+     *
+     * @param  string $name
      */
-    public function __construct()
+    public function __construct($name)
     {
+        $this->setName($name);
+
         $this->postings = new ArrayCollection();
     }
 
@@ -173,32 +213,6 @@ class Account
     }
 
     /**
-     * Set type_code
-     *
-     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
-     * @since  2012-05-04
-     *
-     * @param string $typeCode
-     */
-    public function setTypeCode($typeCode)
-    {
-        $this->type_code = $typeCode;
-    }
-
-    /**
-     * Get type_code
-     *
-     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
-     * @since  2012-05-04
-     *
-     * @return string
-     */
-    public function getTypeCode()
-    {
-        return $this->type_code;
-    }
-
-    /**
      * Set balance
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
@@ -246,5 +260,162 @@ class Account
 
                 throw new \Exception('Incorrect type_code: '.$type_code);
         }
+    }
+
+    /**
+     * Set lft
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @param integer $lft
+     */
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+    }
+
+    /**
+     * Get lft
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @return integer
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Set lvl
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @param integer $lvl
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+    }
+
+    /**
+     * Get lvl
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @return integer
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @param integer $rgt
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+    }
+
+    /**
+     * Get rgt
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @return integer
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Set root
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @param integer $root
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    }
+
+    /**
+     * Get root
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @return integer
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * Set parent
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @param HarvestCloud\DoubleEntryBundle\Entity\Account $parent
+     */
+    public function setParent(\HarvestCloud\DoubleEntryBundle\Entity\Account $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * Get parent
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @return HarvestCloud\DoubleEntryBundle\Entity\Account
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add children
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @param HarvestCloud\DoubleEntryBundle\Entity\Account $children
+     */
+    public function addAccount(\HarvestCloud\DoubleEntryBundle\Entity\Account $child)
+    {
+        $this->children[] = $child;
+        $child->setParent($this);
+    }
+
+    /**
+     * Get children
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-01-27
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }
