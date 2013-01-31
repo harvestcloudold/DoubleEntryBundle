@@ -26,15 +26,16 @@ use HarvestCloud\CoreBundle\Entity\Profile;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  *    "ac"           = "Account",
- *    "as"           = "Asset",
- *    "li"           = "Liability",
- *    "in"           = "Income",
- *    "ex"           = "Expense",
- *    "eq"           = "Equity",
- *    "cu"           = "CurrentAsset",
- *    "ar"           = "AccountsReceivable",
- *    "ap"           = "AccountsPayable",
- *    "sa"           = "Sales"
+ *    "as"           =   "Asset",
+ *    "cu"           =     "CurrentAsset",
+ *    "ar"           =     "AccountsReceivable",
+ *    "li"           =   "Liability",
+ *    "ap"           =     "AccountsPayable",
+ *    "in"           =   "Income",
+ *    "sa"           =     "Sales",
+ *    "ex"           =   "Expense",
+ *    "cg"           =     "CostOfGoodsSold",
+ *    "eq"           =   "Equity"
  * })
  * @ORM\Table(name="double_entry_account")
  * @ORM\Entity(repositoryClass="HarvestCloud\DoubleEntryBundle\Repository\AccountRepository")
@@ -404,6 +405,7 @@ class Account
     {
         $this->children[] = $child;
         $child->setParent($this);
+        $child->setProfile($this->getProfile());
     }
 
     /**
