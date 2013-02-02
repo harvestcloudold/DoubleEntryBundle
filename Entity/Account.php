@@ -103,7 +103,7 @@ class Account
     protected $name;
 
     /**
-     * @ORM\Column(type="decimal", scale="2", nullable=true)
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     protected $balance = 0;
 
