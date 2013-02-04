@@ -18,6 +18,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @since  2012-05-03
  *
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *    "payment" = "PaymentJournal",
+ *    "invoice" = "InvoiceJournal"
+ * })
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="double_entry_journal")
  * @ORM\Entity(repositoryClass="HarvestCloud\DoubleEntryBundle\Repository\JournalRepository")
