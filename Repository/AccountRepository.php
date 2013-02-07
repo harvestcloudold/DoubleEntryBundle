@@ -10,6 +10,7 @@
 namespace HarvestCloud\DoubleEntryBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use HarvestCloud\DoubleEntryBundle\Entity\Account;
 
 /**
  * AccountRepository
@@ -19,4 +20,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class AccountRepository extends EntityRepository
 {
+    /**
+     * findPostingsForAccount
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-06
+     *
+     * @param  Account $account
+     *
+     * @return array
+     */
+    public function findPostingsForAccount(Account $account)
+    {
+        $q = $this->getEntityManager()->createQuery('
+
+            SELECT     p
+            FROM       HarvestCloudDoubleEntryBundle:Posting p
+            WHERE      p.account = :account
+
+        ')->setParameter('account', $account);
+
+        return $q->getResult();
+    }
 }
