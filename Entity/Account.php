@@ -108,6 +108,12 @@ class Account
     protected $balance = 0;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=50, unique=false)
+     */
+    private $slug;
+
+    /**
      * __construct()
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
@@ -419,5 +425,35 @@ class Account
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set slug
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-06
+     *
+     * @param string $slug
+     *
+     * @return Account
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-06
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
