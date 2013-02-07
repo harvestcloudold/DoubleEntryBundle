@@ -38,11 +38,6 @@ class Journal
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    protected $type;
-
-    /**
      * @ORM\OneToMany(targetEntity="Posting", mappedBy="journal", cascade={"persist"})
      */
     protected $postings;
@@ -69,32 +64,6 @@ class Journal
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
-     * @since  2012-05-03
-     *
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * Get type
-     *
-     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
-     * @since  2012-05-03
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
