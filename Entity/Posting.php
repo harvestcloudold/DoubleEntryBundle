@@ -153,4 +153,23 @@ class Posting
     {
         $this->getAccount()->setBalance($this->getAccount()->getBalance()+$this->getAmount());
     }
+
+    /**
+     * getOffsetAccount()
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-06
+     *
+     * @return Account
+     */
+    public function getOffsetAccount()
+    {
+        foreach ($this->getJournal()->getPostings() as $posting)
+        {
+            if ($posting->getAccount()->getId() != $this->getAccount()->getId())
+            {
+                return $posting->getAccount();
+            }
+        }
+    }
 }
