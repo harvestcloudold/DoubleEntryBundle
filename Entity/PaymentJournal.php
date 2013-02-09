@@ -21,4 +21,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PaymentJournal extends Journal
 {
+    /**
+     * Get description
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Payment';
+    }
 }

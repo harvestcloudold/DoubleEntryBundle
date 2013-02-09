@@ -21,8 +21,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *    "payment" = "PaymentJournal",
- *    "invoice" = "InvoiceJournal"
+ *    "payment"         = "PaymentJournal",
+ *    "orderprepayment" = "OrderPrePaymentJournal",
+ *    "invoice"         = "InvoiceJournal"
  * })
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="double_entry_journal")
@@ -43,7 +44,7 @@ class Journal
     protected $postings;
 
     /**
-     * Add posting
+     * __construct()
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2012-05-03
@@ -115,5 +116,31 @@ class Journal
         {
             throw new \Exception('The sum of the amounts of all of the Postings must be zero ('.$sum.' given)');
         }
+    }
+
+    /**
+     * Get description
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Not implemented';
+    }
+
+    /**
+     * Remove postings
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @param \HarvestCloud\DoubleEntryBundle\Entity\Posting $posting
+     */
+    public function removePosting(\HarvestCloud\DoubleEntryBundle\Entity\Posting $posting)
+    {
+        $this->postings->removeElement($posting);
     }
 }
