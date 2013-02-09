@@ -40,6 +40,7 @@ use HarvestCloud\CoreBundle\Entity\Profile;
  *    "sa"           =     "Sales",
  *    "ex"           =   "Expense",
  *    "cg"           =     "CostOfGoodsSold",
+ *    "purchases"    =     "Purchases",
  *    "eq"           =   "Equity"
  * })
  * @ORM\Table(name="double_entry_account")
