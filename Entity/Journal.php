@@ -10,6 +10,7 @@
 namespace HarvestCloud\DoubleEntryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Journal Entity
@@ -42,6 +43,22 @@ class Journal
      * @ORM\OneToMany(targetEntity="Posting", mappedBy="journal", cascade={"persist"})
      */
     protected $postings;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
 
     /**
      * __construct()
@@ -142,5 +159,65 @@ class Journal
     public function removePosting(\HarvestCloud\DoubleEntryBundle\Entity\Posting $posting)
     {
         $this->postings->removeElement($posting);
+    }
+
+    /**
+     * Set created
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @param  \DateTime $created
+     *
+     * @return Journal
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @param \DateTime $updated
+     *
+     * @return Journal
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }
