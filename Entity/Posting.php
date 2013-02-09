@@ -50,6 +50,11 @@ class Posting
     protected $amount;
 
     /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $balance_afterwards;
+
+    /**
      * Get id
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
@@ -152,6 +157,7 @@ class Posting
     public function updateAccountBalance()
     {
         $this->getAccount()->setBalance($this->getAccount()->getBalance()+$this->getAmount());
+        $this->setBalanceAfterwards($this->getAccount()->getBalance());
     }
 
     /**
@@ -171,5 +177,35 @@ class Posting
                 return $posting->getAccount();
             }
         }
+    }
+
+    /**
+     * Set balance_afterwards
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @param  float $balanceAfterwards
+     *
+     * @return Posting
+     */
+    public function setBalanceAfterwards($balanceAfterwards)
+    {
+        $this->balance_afterwards = $balanceAfterwards;
+
+        return $this;
+    }
+
+    /**
+     * Get balance_afterwards
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @return float
+     */
+    public function getBalanceAfterwards()
+    {
+        return $this->balance_afterwards;
     }
 }
