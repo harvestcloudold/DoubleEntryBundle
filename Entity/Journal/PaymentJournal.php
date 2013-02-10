@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace HarvestCloud\DoubleEntryBundle\Entity;
+namespace HarvestCloud\DoubleEntryBundle\Entity\Journal;
 
 use Doctrine\ORM\Mapping as ORM;
 

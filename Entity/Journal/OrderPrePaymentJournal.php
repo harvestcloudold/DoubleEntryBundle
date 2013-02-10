@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace HarvestCloud\DoubleEntryBundle\Entity;
+namespace HarvestCloud\DoubleEntryBundle\Entity\Journal;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderPrePaymentJournal extends PaymentJournal
 {
     /**
-     * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Order", inversedBy="pre_payment_journals", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Order", inversedBy="pre_payment_journals")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace HarvestCloud\DoubleEntryBundle\Entity;
+namespace HarvestCloud\DoubleEntryBundle\Entity\Journal;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -22,9 +22,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *    "payment"         = "PaymentJournal",
- *    "orderprepayment" = "OrderPrePaymentJournal",
- *    "invoice"         = "InvoiceJournal"
+ *    "payment"               = "PaymentJournal",
+ *    "orderprepayment"       =   "OrderPrePaymentJournal",
+ *    "buyerorderprepayment"  =     "BuyerOrderPrePaymentJournal",
+ *    "sellerorderprepayment" =     "SellerOrderPrePaymentJournal",
+ *    "invoice"               = "InvoiceJournal"
  * })
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="double_entry_journal")
@@ -40,7 +42,7 @@ class Journal
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Posting", mappedBy="journal", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\HarvestCloud\DoubleEntryBundle\Entity\Posting", mappedBy="journal", cascade={"persist"})
      */
     protected $postings;
 
@@ -90,9 +92,9 @@ class Journal
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2012-05-03
      *
-     * @param  Posting $posting
+     * @param  \HarvestCloud\DoubleEntryBundle\Entity\Posting $posting
      */
-    public function addPosting(Posting $posting)
+    public function addPosting(\HarvestCloud\DoubleEntryBundle\Entity\Posting $posting)
     {
         $this->postings[] = $posting;
         $posting->setJournal($this);
@@ -219,5 +221,20 @@ class Journal
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * post()
+     *
+     * Created Postings for this Journal
+     *
+     * Not implemented in this base class. Needs to be implemented in sub classes
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     */
+    public function post()
+    {
+        throw new \Exception('Not yet implemented');
     }
 }
