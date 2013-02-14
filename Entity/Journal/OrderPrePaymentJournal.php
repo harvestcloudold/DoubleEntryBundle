@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderPrePaymentJournal extends PaymentJournal
 {
     /**
-     * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Order", inversedBy="pre_payment_journals")
+     * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Order", inversedBy="prePaymentJournals")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;
