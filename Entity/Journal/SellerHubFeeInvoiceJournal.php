@@ -21,4 +21,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SellerHubFeeInvoiceJournal extends HubFeeInvoiceJournal
 {
+    /**
+     * post()
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-23
+     */
+    public function post()
+    {
+        // COGS Posting
+        $cogsPosting = new \HarvestCloud\DoubleEntryBundle\Entity\Posting();
+        $cogsPosting->setAccount($this->getInvoice()->getSeller()->getCostOfGoodsSoldAccount());
+        $cogsPosting->setAmount($this->getInvoice()->getAmount());
+
+        $this->addPosting($cogsPosting);
+
+        // A/P Posting
+        $apPosting = new \HarvestCloud\DoubleEntryBundle\Entity\Posting();
+        $apPosting->setAccount($this->getInvoice()->getSeller()->getAccountsPayableAccount());
+        $apPosting->setAmount(-1*$this->getInvoice()->getAmount());
+
+        $this->addPosting($apPosting);
+    }
 }
