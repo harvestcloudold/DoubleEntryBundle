@@ -38,7 +38,7 @@ class HubHubFeeInvoiceJournal extends HubFeeInvoiceJournal
 
         // A/R Posting
         $arPosting = new \HarvestCloud\DoubleEntryBundle\Entity\Posting();
-        $arPosting->setAccount($this->getInvoice()->getHub()->getArPrePaymentAccount());
+        $arPosting->setAccount($this->getInvoice()->getHub()->getAccountsReceivableAccount());
         $arPosting->setAmount(-1*$this->getInvoice()->getAmount());
 
         $this->addPosting($arPosting);
