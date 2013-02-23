@@ -22,11 +22,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *    "payment"               = "PaymentJournal",
- *    "orderprepayment"       =   "OrderPrePaymentJournal",
- *    "buyerorderprepayment"  =     "BuyerOrderPrePaymentJournal",
- *    "sellerorderprepayment" =     "SellerOrderPrePaymentJournal",
- *    "invoice"               = "InvoiceJournal"
+ *    "payment"                     = "PaymentJournal",
+ *    "orderprepayment"             =   "OrderPrePaymentJournal",
+ *    "buyerorderprepayment"        =     "BuyerOrderPrePaymentJournal",
+ *    "sellerorderprepayment"       =     "SellerOrderPrePaymentJournal",
+ *    "invoice"                     = "InvoiceJournal",
+ *    "hubfeeinvoicejournal"        =   "HubFeeInvoiceJournal",
+ *    "sellerhubfeeinvoicejournal"  =     "SellerHubFeeInvoiceJournal",
+ *    "hubhubfeeinvoicejournal"     =     "HubHubFeeInvoiceJournal"
  * })
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="double_entry_journal")
