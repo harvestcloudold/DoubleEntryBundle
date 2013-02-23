@@ -21,4 +21,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HubFeeInvoiceJournal extends InvoiceJournal
 {
+    /**
+     * Get description
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-02-09
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Hub Fee Invoice #'.$this->getInvoice()->getId();
+    }
 }
