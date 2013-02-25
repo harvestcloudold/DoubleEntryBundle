@@ -27,6 +27,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "buyerorderprepayment"        =     "BuyerOrderPrePaymentJournal",
  *    "sellerorderprepayment"       =     "SellerOrderPrePaymentJournal",
  *    "invoice"                     = "InvoiceJournal",
+ *    "orderinvoicejournal"         =   "OrderInvoiceJournal",
+ *    "buyerorderinvoicejournal"    =     "BuyerOrderInvoiceJournal",
+ *    "sellerorderinvoicejournal"   =     "SellerOrderInvoiceJournal",
  *    "hubfeeinvoicejournal"        =   "HubFeeInvoiceJournal",
  *    "sellerhubfeeinvoicejournal"  =     "SellerHubFeeInvoiceJournal",
  *    "hubhubfeeinvoicejournal"     =     "HubHubFeeInvoiceJournal"
