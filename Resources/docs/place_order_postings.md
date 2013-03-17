@@ -83,3 +83,25 @@ Seller is invoiced by Exchange for the posting fee:
                     |                                     |
                     |       $4                   $4       |
                     |                                     |
+
+
+Hub invoices Seller for the hub fee:
+
+              Hub A/R (Asset)                     Hub Sales (Income)
+    ---------------------------------     ---------------------------------
+         Debits          Credits               Debits          Credits
+    ---------------------------------     ---------------------------------
+                    |                                     |
+                    |       $8                   $8       |
+                    |                                     |
+
+
+Seller is invoiced by Hub for the hub fee:
+
+         Seller A/P (Liability)                  Seller COGS (Expense)
+    ---------------------------------     ---------------------------------
+         Debits          Credits               Debits          Credits
+    ---------------------------------     ---------------------------------
+                    |                                     |
+                    |       $8                   $8       |
+                    |                                     |
