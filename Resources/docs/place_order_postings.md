@@ -1,6 +1,10 @@
 Account Posting Example
 =======================
 
+This is an example of who pays what in the Harvest Cloud system.  In this
+example we are just showing the account postings at the time an Order is
+dispatched by the Seller.  This is when all parties are invoiced.
+
 For this example we will use the following Order information:
 
     Order subtotal:                $100
