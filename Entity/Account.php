@@ -462,4 +462,80 @@ class Account
     {
         return $this->slug;
     }
+
+    /**
+     * isAsset()
+     *
+     * Whether or not this Account is an Asset account
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     *
+     * @return boolean
+     */
+    public function isAsset()
+    {
+       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Asset';
+
+       if (get_class($this) == $base_class) return true;
+
+       return (in_array($base_class, class_parents($this)));
+    }
+
+    /**
+     * isLiability()
+     *
+     * Whether or not this Account is a Liability account
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     *
+     * @return boolean
+     */
+    public function isLiability()
+    {
+       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Liability';
+
+       if (get_class($this) == $base_class) return true;
+
+       return (in_array($base_class, class_parents($this)));
+    }
+
+    /**
+     * isExpense()
+     *
+     * Whether or not this Account is an Expense account
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     *
+     * @return boolean
+     */
+    public function isExpense()
+    {
+       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Expense';
+
+       if (get_class($this) == $base_class) return true;
+
+       return (in_array($base_class, class_parents($this)));
+    }
+
+    /**
+     * isIncome()
+     *
+     * Whether or not this Account is an Income account
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     *
+     * @return boolean
+     */
+    public function isIncome()
+    {
+       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Income';
+
+       if (get_class($this) == $base_class) return true;
+
+       return (in_array($base_class, class_parents($this)));
+    }
 }
