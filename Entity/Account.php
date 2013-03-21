@@ -25,28 +25,16 @@ use HarvestCloud\CoreBundle\Entity\Profile;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *    "ac"           = "Account",
- *    "as"           =   "Asset",
- *    "cu"           =     "CurrentAsset",
- *    "bank"         =       "Bank",
- *    "cash"         =       "Cash",
- *    "paypal"       =       "PayPal",
- *    "ar"           =     "AccountsReceivable",
- *    "arprepay"     =       "ARPrePayment",
- *    "li"           =   "Liability",
- *    "ap"           =     "AccountsPayable",
- *    "apprepay"     =       "APPrePayment",
- *    "in"           =   "Income",
- *    "sa"           =     "Sales",
- *    "ex"           =   "Expense",
- *    "cg"           =     "CostOfGoodsSold",
- *    "purchases"    =     "Purchases",
- *    "eq"           =   "Equity"
+ *    "asset"     = "AssetAccount",
+ *    "liability" = "LiabilityAccount",
+ *    "income"    = "IncomeAccount",
+ *    "expense"   = "ExpenseAccount",
+ *    "equity"    = "EquityAccount"
  * })
  * @ORM\Table(name="double_entry_account")
  * @ORM\Entity(repositoryClass="HarvestCloud\DoubleEntryBundle\Repository\AccountRepository")
  */
-class Account
+abstract class Account
 {
     /**
      * @ORM\Id
@@ -468,6 +456,8 @@ class Account
      *
      * Whether or not this Account is an Asset account
      *
+     * We return false here and then return true in the relevant subclass
+     *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-03-20
      *
@@ -475,17 +465,15 @@ class Account
      */
     public function isAsset()
     {
-       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Asset';
-
-       if (get_class($this) == $base_class) return true;
-
-       return (in_array($base_class, class_parents($this)));
+        return false;
     }
 
     /**
      * isLiability()
      *
      * Whether or not this Account is a Liability account
+     *
+     * We return false here and then return true in the relevant subclass
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-03-20
@@ -494,17 +482,15 @@ class Account
      */
     public function isLiability()
     {
-       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Liability';
-
-       if (get_class($this) == $base_class) return true;
-
-       return (in_array($base_class, class_parents($this)));
+        return false;
     }
 
     /**
      * isExpense()
      *
      * Whether or not this Account is an Expense account
+     *
+     * We return false here and then return true in the relevant subclass
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-03-20
@@ -513,17 +499,15 @@ class Account
      */
     public function isExpense()
     {
-       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Expense';
-
-       if (get_class($this) == $base_class) return true;
-
-       return (in_array($base_class, class_parents($this)));
+        return false;
     }
 
     /**
      * isIncome()
      *
      * Whether or not this Account is an Income account
+     *
+     * We return false here and then return true in the relevant subclass
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-03-20
@@ -532,10 +516,23 @@ class Account
      */
     public function isIncome()
     {
-       $base_class = 'HarvestCloud\DoubleEntryBundle\Entity\Income';
+        return false;
+    }
 
-       if (get_class($this) == $base_class) return true;
-
-       return (in_array($base_class, class_parents($this)));
+    /**
+     * isEquity()
+     *
+     * Whether or not this Account is an Equity account
+     *
+     * We return false here and then return true in the relevant subclass
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-21
+     *
+     * @return boolean
+     */
+    public function isEquity()
+    {
+        return false;
     }
 }
