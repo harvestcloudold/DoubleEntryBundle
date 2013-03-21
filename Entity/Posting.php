@@ -55,6 +55,11 @@ class Posting
     protected $balance_afterwards;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $posted_at;
+
+    /**
      * Get id
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
@@ -145,14 +150,42 @@ class Posting
         return $this->journal;
     }
 
+    /**
+     * Set posted_at
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-19
+     *
+     * @param  \DateTime $postedAt
+     *
+     * @return Invoice
+     */
+    public function setPostedAt(\DateTime $postedAt)
+    {
+        $this->posted_at = $postedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get posted_at
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-19
+     *
+     * @return \DateTime
+     */
+    public function getPostedAt()
+    {
+        return $this->posted_at;
+    }
+
 
     /**
      * Update Account balance
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2012-05-21
-     *
-     * @ORM\PrePersist
      */
     public function updateAccountBalance()
     {
@@ -207,5 +240,17 @@ class Posting
     public function getBalanceAfterwards()
     {
         return $this->balance_afterwards;
+    }
+
+    /**
+     * post()
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     */
+    public function post()
+    {
+        $this->setPostedAt(new \DateTime());
+        $this->updateAccountBalance();
     }
 }

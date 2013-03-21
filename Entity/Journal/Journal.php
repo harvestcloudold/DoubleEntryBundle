@@ -11,6 +11,8 @@ namespace HarvestCloud\DoubleEntryBundle\Entity\Journal;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use HarvestCloud\DoubleEntryBundle\Entity\Account;
+use HarvestCloud\DoubleEntryBundle\Entity\Posting;
 
 /**
  * Journal Entity
@@ -70,6 +72,11 @@ class Journal
      * @ORM\Column(type="datetime")
      */
     private $updated;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $posted_at;
 
     /**
      * __construct()
@@ -233,17 +240,111 @@ class Journal
     }
 
     /**
+     * Set posted_at
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-19
+     *
+     * @param  \DateTime $postedAt
+     *
+     * @return Invoice
+     */
+    public function setPostedAt(\DateTime $postedAt)
+    {
+        $this->posted_at = $postedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get posted_at
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-19
+     *
+     * @return \DateTime
+     */
+    public function getPostedAt()
+    {
+        return $this->posted_at;
+    }
+
+    /**
      * post()
      *
-     * Created Postings for this Journal
-     *
-     * Not implemented in this base class. Needs to be implemented in sub classes
+     * Post all Postings for this Journal
      *
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-02-09
      */
     public function post()
     {
-        throw new \Exception('Not yet implemented');
+        $this->setPostedAt(new \DateTime());
+
+        $this->ensureZeroSumOfPostings();
+
+        foreach ($this->getPostings() as $posting) {
+            $posting->post();
+        }
+    }
+
+    /**
+     * debit()
+     *
+     * Debits the given account by the given account. Takes into account
+     * what type of account it is (Asset, Liability, Income, Expense)
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     *
+     * @param  \HarvestCloud\DoubleEntryBundle\Entity\Account $account
+     * @param  decimal $amount
+     *
+     * @return \HarvestCloud\DoubleEntryBundle\Entity\Posting
+     */
+    public function debit(Account $account, $amount)
+    {
+        // Income and Liabilities need the sign changed
+        if ($account->isIncome() || $account->isLiability()) {
+          $amount = -1*$amount;
+        }
+
+        $posting = new Posting();
+        $posting->setAccount($account);
+        $posting->setAmount($amount);
+
+        $this->addPosting($posting);
+
+        return $posting;
+    }
+
+    /**
+     * credit()
+     *
+     * Credits the given account by the given account. Takes into account
+     * what type of account it is (Asset, Liability, Income, Expense)
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-20
+     *
+     * @param  \HarvestCloud\DoubleEntryBundle\Entity\Account $account
+     * @param  decimal $amount
+     *
+     * @return \HarvestCloud\DoubleEntryBundle\Entity\Posting
+     */
+    public function credit(Account $account, $amount)
+    {
+        // Income and Liabilities need the sign changed
+        if ($account->isIncome() || $account->isLiability()) {
+          $amount = -1*$amount;
+        }
+
+        $posting = new Posting();
+        $posting->setAccount($account);
+        $posting->setAmount($amount);
+
+        $this->addPosting($posting);
+
+        return $posting;
     }
 }
