@@ -39,7 +39,7 @@ class Posting
     protected $account;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\HarvestCloud\DoubleEntryBundle\Entity\Journal\Journal", inversedBy="postings")
+     * @ORM\ManyToOne(targetEntity="\HarvestCloud\DoubleEntryBundle\Entity\Journal", inversedBy="postings")
      * @ORM\JoinColumn(name="journal_id", referencedColumnName="id")
      */
     protected $journal;
@@ -130,9 +130,9 @@ class Posting
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2012-05-03
      *
-     * @param  \HarvestCloud\DoubleEntryBundle\Entity\Journal\Journal $journal
+     * @param  \HarvestCloud\DoubleEntryBundle\Entity\Journal $journal
      */
-    public function setJournal(\HarvestCloud\DoubleEntryBundle\Entity\Journal\Journal $journal)
+    public function setJournal(\HarvestCloud\DoubleEntryBundle\Entity\Journal $journal)
     {
         $this->journal = $journal;
     }

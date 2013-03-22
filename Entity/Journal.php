@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace HarvestCloud\DoubleEntryBundle\Entity\Journal;
+namespace HarvestCloud\DoubleEntryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -24,26 +24,14 @@ use HarvestCloud\DoubleEntryBundle\Entity\Posting;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *    "payment"                     = "PaymentJournal",
- *    "orderprepayment"             =   "OrderPrePaymentJournal",
- *    "buyerorderprepayment"        =     "BuyerOrderPrePaymentJournal",
- *    "sellerorderprepayment"       =     "SellerOrderPrePaymentJournal",
- *    "invoice"                     = "InvoiceJournal",
- *    "postingfeeinvoicejournal"    =   "ProductPostingFeeInvoiceJournal",
- *    "exchangefeeincoicejournal"   =     "ExchangeProductPostingFeeInvoiceJournal",
- *    "sellerfeeinvoicejournal"     =     "SellerProductPostingFeeInvoiceJournal",
- *    "orderinvoicejournal"         =   "OrderInvoiceJournal",
- *    "buyerorderinvoicejournal"    =     "BuyerOrderInvoiceJournal",
- *    "sellerorderinvoicejournal"   =     "SellerOrderInvoiceJournal",
- *    "hubfeeinvoicejournal"        =   "HubFeeInvoiceJournal",
- *    "sellerhubfeeinvoicejournal"  =     "SellerHubFeeInvoiceJournal",
- *    "hubhubfeeinvoicejournal"     =     "HubHubFeeInvoiceJournal"
+ *    "payment" = "PaymentJournal",
+ *    "invoice" = "InvoiceJournal",
  * })
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="double_entry_journal")
  * @ORM\Entity(repositoryClass="HarvestCloud\DoubleEntryBundle\Repository\JournalRepository")
  */
-class Journal
+abstract class Journal
 {
     /**
      * @ORM\Id
