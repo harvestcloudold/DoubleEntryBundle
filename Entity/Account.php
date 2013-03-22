@@ -25,6 +25,7 @@ use HarvestCloud\CoreBundle\Entity\Profile;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
+ *    "root"      = "RootAccount",
  *    "asset"     = "AssetAccount",
  *    "liability" = "LiabilityAccount",
  *    "income"    = "IncomeAccount",

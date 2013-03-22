@@ -12,13 +12,13 @@ namespace HarvestCloud\DoubleEntryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PayPal account
+ * RootAccount Entity
  *
  * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
- * @since  2013-02-09
+ * @since  2013-03-21
  *
  * @ORM\Entity
  */
-class PayPal extends CurrentAsset
+class RootAccount extends Account
 {
 }
