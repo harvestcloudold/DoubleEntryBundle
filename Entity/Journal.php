@@ -46,6 +46,12 @@ abstract class Journal
     protected $postings;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Profile", inversedBy="journals")
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     */
+    protected $profile;
+
+    /**
      * @var datetime $created
      *
      * @Gedmo\Timestampable(on="create")
@@ -334,5 +340,35 @@ abstract class Journal
         $this->addPosting($posting);
 
         return $posting;
+    }
+
+    /**
+     * Set profile
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-27
+     *
+     * @param  \HarvestCloud\CoreBundle\Entity\Profile $profile
+     *
+     * @return Journal
+     */
+    public function setProfile(\HarvestCloud\CoreBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-27
+     *
+     * @return \HarvestCloud\CoreBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
     }
 }

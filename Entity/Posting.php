@@ -39,6 +39,12 @@ class Posting
     protected $account;
 
     /**
+     * @ORM\ManyToOne(targetEntity="HarvestCloud\CoreBundle\Entity\Profile", inversedBy="postings")
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     */
+    protected $profile;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\HarvestCloud\DoubleEntryBundle\Entity\Journal", inversedBy="postings")
      * @ORM\JoinColumn(name="journal_id", referencedColumnName="id")
      */
@@ -252,5 +258,35 @@ class Posting
     {
         $this->setPostedAt(new \DateTime());
         $this->updateAccountBalance();
+    }
+
+    /**
+     * Set profile
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-27
+     *
+     * @param  \HarvestCloud\CoreBundle\Entity\Profile $profile
+     *
+     * @return Posting
+     */
+    public function setProfile(\HarvestCloud\CoreBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
+     * @since  2013-03-27
+     *
+     * @return \HarvestCloud\CoreBundle\Entity\Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
     }
 }
