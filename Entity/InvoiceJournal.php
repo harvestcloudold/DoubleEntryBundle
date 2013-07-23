@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class InvoiceJournal extends Journal
 {
     /**
-     * @ORM\ManyToOne(targetEntity="\HarvestCloud\InvoiceBundle\Entity\Invoice", inversedBy="journals")
+     * @ORM\ManyToOne(targetEntity="\HarvestCloud\CoreBundle\Entity\Invoice\Invoice", inversedBy="journals")
      * @ORM\JoinColumn(name="invoice_id", referencedColumnName="id")
      */
     protected $invoice;
@@ -33,9 +33,9 @@ class InvoiceJournal extends Journal
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-02-23
      *
-     * @param  HarvestCloud\InvoiceBundle\Entity\Invoice
+     * @param  HarvestCloud\CoreBundle\Entity\Invoice\Invoice
      */
-    public function __construct(\HarvestCloud\InvoiceBundle\Entity\Invoice $invoice)
+    public function __construct(\HarvestCloud\CoreBundle\Entity\Invoice\Invoice $invoice)
     {
         parent::__construct();
 
@@ -48,11 +48,11 @@ class InvoiceJournal extends Journal
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-02-23
      *
-     * @param  \HarvestCloud\InvoiceBundle\Entity\Invoice $invoice
+     * @param  \HarvestCloud\CoreBundle\Entity\Invoice\Invoice $invoice
      *
      * @return InvoiceJournal
      */
-    public function setInvoice(\HarvestCloud\InvoiceBundle\Entity\Invoice $invoice = null)
+    public function setInvoice(\HarvestCloud\CoreBundle\Entity\Invoice\Invoice $invoice = null)
     {
         $this->invoice = $invoice;
 
@@ -65,7 +65,7 @@ class InvoiceJournal extends Journal
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-02-23
      *
-     * @return \HarvestCloud\InvoiceBundle\Entity\Invoice
+     * @return \HarvestCloud\CoreBundle\Entity\Invoice\Invoice
      */
     public function getInvoice()
     {

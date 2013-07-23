@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PaymentJournal extends Journal
 {
     /**
-     * @ORM\ManyToOne(targetEntity="\HarvestCloud\PaymentBundle\Entity\Payment", inversedBy="journals")
+     * @ORM\ManyToOne(targetEntity="\HarvestCloud\CoreBundle\Entity\Payment\Payment", inversedBy="journals")
      * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
      */
     protected $payment;
@@ -46,11 +46,11 @@ class PaymentJournal extends Journal
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-03-25
      *
-     * @param  \HarvestCloud\PaymentBundle\Entity\Payment $payment
+     * @param  \HarvestCloud\CoreBundle\Entity\Payment\Payment $payment
      *
      * @return PaymentJournal
      */
-    public function setPayment(\HarvestCloud\PaymentBundle\Entity\Payment $payment = null)
+    public function setPayment(\HarvestCloud\CoreBundle\Entity\Payment\Payment $payment = null)
     {
         $this->payment = $payment;
 
@@ -63,7 +63,7 @@ class PaymentJournal extends Journal
      * @author Tom Haskins-Vaughan <tom@harvestcloud.com>
      * @since  2013-03-25
      *
-     * @return \HarvestCloud\PaymentBundle\Entity\Payment
+     * @return \HarvestCloud\CoreBundle\Entity\Payment\Payment
      */
     public function getPayment()
     {
