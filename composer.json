@@ -1,0 +1,11 @@
+{
+    "name": "harvestcloud/double-entry-bundle",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": { "HarvestCloud\\DoubleEntryBundle": "" }
+    },
+    "target-dir": "HarvestCloud/DoubleEntryBundle",
+    "license": "MIT"
+}
